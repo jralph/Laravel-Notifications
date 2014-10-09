@@ -26,7 +26,7 @@ class Notification implements NotificationContract {
      *
      * @var array
      */
-    protected $tags = [];
+    protected $tags = ['notification'];
 
     public function __construct(Store $store)
     {
@@ -81,7 +81,7 @@ class Notification implements NotificationContract {
         if (!empty($this->tags))
         {
             $this->addKeyToTags(self::KEY_PREFIX.$key);
-            $this->tags = [];
+            $this->tags = ['notification'];
         }
 
         return $this->store->flash(self::KEY_PREFIX.$key, $value);
