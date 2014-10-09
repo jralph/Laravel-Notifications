@@ -63,7 +63,7 @@ class Notification implements NotificationContract {
 
         foreach ($keys as $key)
         {
-            $notifications[$this->removePrefix($key)] = $this->get($key);
+            $notifications[$this->removePrefix($key)] = $this->get($this->removePrefix($key));
         }
 
         return $notifications;
