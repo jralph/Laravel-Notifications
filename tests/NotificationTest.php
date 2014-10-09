@@ -15,7 +15,8 @@ class IlluminateSessionNotificationTest extends PHPUnit_Framework_TestCase {
 
     public function test_put_stores_item_in_session()
     {
-        $this->store->shouldReceive('flash')->once()->andReturn(true);
+        $this->store->shouldReceive('get')->once()->andReturn([]);
+        $this->store->shouldReceive('flash')->twice()->andReturn(true);
 
         $this->assertEquals(true, $this->notification->put('key', 'my_value'));
     }
