@@ -1,30 +1,25 @@
 <?php namespace Jralph\Notification;
 
-use Jralph\Notification\Contracts\Notification;
-use Illuminate\Session\Store as Session;
+use Jralph\Notification\Contracts\Notification as NotificationContract;
+use Jralph\Notification\Contracts\Store;
 
-class IlluminateSessionNotification implements Notification {
+class Notification implements NotificationContract {
 
     /**
-     * The prefix for the notification session key.
+     * The prefix for the notification key.
      *
      * @var string
      */
     const KEY_PREFIX = 'notification_';
 
     /**
-     * The prefix for the tag  session key.
+     * The prefix for the tag by key.
      *
      * @var string
      */
     const TAG_PREFIX = 'tag_';
 
-    /**
-     * Store the illuminate session manager instance.
-     *
-     * @var Illuminate\Session\Store
-     */
-    protected $session;
+    protected $store;
 
     /**
      * Any tags to add to the notification being created.
@@ -33,9 +28,9 @@ class IlluminateSessionNotification implements Notification {
      */
     protected $tags = [];
 
-    public function __construct(Session $session)
+    public function __construct(Store $store)
     {
-        $this->session = $session;
+        $this->store = $store;
     }
 
     /**
@@ -62,7 +57,7 @@ class IlluminateSessionNotification implements Notification {
      */
     public function tag($tag)
     {
-        $keys = (array) $this->session->get(self::KEY_PREFIX.self::TAG_PREFIX.$tag);
+        $keys = (array) $this->store->get(self::KEY_PREFIX.self::TAG_PREFIX.$tag);
 
         $notifications = [];
 
@@ -75,7 +70,7 @@ class IlluminateSessionNotification implements Notification {
     }
 
     /**
-     * Put a notification into the session storage.
+     * Put a notification into the storage.
      *
      * @param  string $key
      * @param  mixed $value
@@ -89,7 +84,7 @@ class IlluminateSessionNotification implements Notification {
             $this->tags = [];
         }
 
-        return $this->session->flash(self::KEY_PREFIX.$key, $value);
+        return $this->store->flash(self::KEY_PREFIX.$key, $value);
     }
 
     /**
@@ -101,14 +96,14 @@ class IlluminateSessionNotification implements Notification {
     {
         foreach ($this->tags as $tag)
         {
-            $existingTagKeys = (array) $this->session->get(self::KEY_PREFIX.self::TAG_PREFIX.$tag);
+            $existingTagKeys = (array) $this->store->get(self::KEY_PREFIX.self::TAG_PREFIX.$tag);
 
             if (!in_array($key, $existingTagKeys))
             {
                 $existingTagKeys[] = $key;
             }
 
-            $this->session->flash(self::KEY_PREFIX.self::TAG_PREFIX.$tag, $existingTagKeys);
+            $this->store->flash(self::KEY_PREFIX.self::TAG_PREFIX.$tag, $existingTagKeys);
         }
     }
 
@@ -121,20 +116,26 @@ class IlluminateSessionNotification implements Notification {
      */
     public function get($key, $default = null)
     {
-        return $this->session->get(self::KEY_PREFIX.$key) ?: $default;
+        return $this->store->get(self::KEY_PREFIX.$key) ?: $default;
     }
 
     /**
-     * Check if a notification is in the session.
+     * Check if a notification is in the store.
      *
      * @param  string  $key
      * @return boolean
      */
     public function has($key)
     {
-        return $this->session->has(self::KEY_PREFIX.$key);
+        return $this->store->has(self::KEY_PREFIX.$key);
     }
 
+    /**
+     * Remove the key prefix from a given string.
+     *
+     * @param  string $key
+     * @return string
+     */
     protected function removePrefix($key)
     {
         return str_replace(self::KEY_PREFIX, '', $key);

@@ -19,7 +19,8 @@ class NotificationServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        $this->app->bind('Jralph\Notification\Contracts\Notification', 'Jralph\Notification\IlluminateSessionNotification');
+        $this->app->bind('Jralph\Notification\Contracts\Store', 'Jralph\Notification\IlluminateSessionStore');
+        $this->app->bind('Jralph\Notification\Contracts\Notification', 'Jralph\Notification\Notification');
     }
 
     /**

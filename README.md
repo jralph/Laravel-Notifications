@@ -5,7 +5,7 @@ A simple and easy to use flash notification setup for Laravel 4.
 
 ### Extension ###
 
-By default, the notifications are handled by the Illuminate Session Store but this can be easily replaced by implementing the `Jralph\Notification\Contracts\Notification` contract provided and then bound using the IoC container. Once done, any existing code will continue to work as normal. For example, you could easily switch out the Session Store for your own form of storage for flash messages.
+By default, the notifications are handled by the Illuminate Session Store but this can be easily replaced by implementing the `Jralph\Notification\Contracts\Store` contract provided and then bound using the IoC container. Once done, any existing code will continue to work as normal. For example, you could easily switch out the Session Store for your own form of storage for flash messages.
 
 Usage
 -----
