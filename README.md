@@ -1,5 +1,7 @@
-Laravel 4 Flash Notifications
+Laravel 4 Flash Notifications 
 =============================
+
+[![Latest Stable Version](https://poser.pugx.org/jralph/notification/v/stable.svg)](https://packagist.org/packages/jralph/notification) [![Total Downloads](https://poser.pugx.org/jralph/notification/downloads.svg)](https://packagist.org/packages/jralph/notification) [![Latest Unstable Version](https://poser.pugx.org/jralph/notification/v/unstable.svg)](https://packagist.org/packages/jralph/notification) [![License](https://poser.pugx.org/jralph/notification/license.svg)](https://packagist.org/packages/jralph/notification)
 
 A simple and easy to use flash notification setup for Laravel 4.
 
