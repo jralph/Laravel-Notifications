@@ -140,3 +140,8 @@ You could also disregard the tags for a simpler approach and just display the va
     </div>
 @endif
 ```
+
+### Upcoming Features ###
+
+- Add a default tag that is not overwritten.
+    - __OR__ add the `Notification::all()` method to retrieve all messages.
